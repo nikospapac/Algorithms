@@ -28,6 +28,12 @@ int binsearch( int array[], int num, int N ) {
 		return N - 1;
 	}
 
+	if ( array[ N / 2 ] > num ) {
+		len = 0;
+	}
+	else {
+		len = N / 2;
+	}
 
 	N = binsearch( array, num, N / 2 );
 
