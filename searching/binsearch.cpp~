@@ -8,7 +8,7 @@ int binsearch( int[], int, int );
 int main() {
 	int array[ 1 ] = { 5 };
 
-	int place = binsearch( array, 5, 1 );
+	int place = binsearch( array, 2, 1 );
 
 	if ( place >= 0 ) { 
 		printf( "%i\n", array[place] );
