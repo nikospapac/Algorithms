@@ -1,32 +1,31 @@
 #include <cstdio>
-#include <algorithm>
 #include <vector>
-#include <queue>
+#include <algorithm>
+#include <stack>
 
 using namespace std;
 
-int dfsSearch( vector<int> graph[], bool visited[], int u, int v ) {
-	if ( graph[ u ].size() == 0 ) {
-		return 0;
-	}
-	int i, p;
-	for ( i = 0; i < graph[ u ].size(); ++i ) {
-		p = graph[ u ][ i ];
-		if ( !visited[ p ] ) {
-			dfsSearch( graph, visited, p, v );
-			visited[ p ] = true;
-		}
-	}
-	return visited[ v ];
-}
-
 bool dfs( vector<int> graph[], int N, int u, int v ) {
 	bool visited[ N + 1 ];
-	int i;
-	for ( i = 0; i < N; ++i ) {
+	int i, p;
+	for ( i = 0; i <= N; ++i ) {
 		visited[ i ] = false;
 	}
-	return dfsSearch( graph, visited, u, v );
+	stack<int> s;
+	s.push( u - 1 );
+	while ( !s.empty() ) {
+		p = s.top();
+		s.pop();
+		visited[ p ] = true;
+		for ( i = 0; i < N; ++i ) {
+			if ( graph[ p ][ i ] ) {
+				if ( !visited[ i ] ) {
+					s.push( i );
+				}
+			}
+		}
+	}
+	return visited[ v - 1 ];
 }
 
 int main() {
@@ -34,14 +33,19 @@ int main() {
 	FILE *fout = fopen( "dfs.out", "w" );
 	int N, S, T, M;
 	fscanf( fin, "%d%d%d%d", &N, &S, &T, &M );
-	int i, u, v;
 	vector<int> graph[ N + 1 ];
+	int i, j;
+	for ( i = 0; i < N; ++i ) {
+		for ( j = 0; j < N; ++j ) {
+			graph[ i ].push_back( 0 );
+		}
+	}
+	int u, v;
 
 	for ( i = 0; i < M; ++i ) {
 		fscanf( fin, "%d%d", &u, &v );
-		graph[ u ].push_back( v );
+		graph[ u - 1 ][ v - 1 ] = 1;
 	}
-
 	if ( dfs( graph, N, S, T ) ) {
 		fprintf( fout, "1\n" );
 	}

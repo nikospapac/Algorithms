@@ -21,8 +21,9 @@ bool bfs( vector<int> A[], int u, int v ) {
 		visited[ p ] = true;
 		for ( i = 0; i < N; ++i ) {
 			if ( A[ p ][ i ] ) {
-				if ( !visited[ i ] ) {
-					q.push( i );
+				k = A[ p ][ i ];
+				if ( !visited[ k ] ) {
+					q.push( k );
 				}
 			}
 		}
